@@ -17,12 +17,6 @@
 
 MEMORY
 {
-    /*
-     * External apps: regions can't overlap so addresses are corrected after build.
-     * Picking uncommon address values for search & replace in binaries (no false positives) - 0xADB00000-0xADEF0000 seems to be good.
-     * Also need to consider processor memory map - reading 0xADxxxxxx generates a fault which may be better than unexpected behavior.
-     * External app address ranges below must match those in python file "external_app_info.py".
-     */
     ram_external_app_afsk_rx               (rwx) : org = 0xADB10000, len = 32k
     ram_external_app_calculator            (rwx) : org = 0xADB20000, len = 32k
     ram_external_app_font_viewer           (rwx) : org = 0xADB30000, len = 32k
@@ -119,6 +113,7 @@ MEMORY
     ram_external_app_ais_rx                (rwx) : org = 0xAE0E0000, len = 32k
     ram_external_app_aprs_rx               (rwx) : org = 0xAE0F0000, len = 32k
     ram_external_app_aprs_tx               (rwx) : org = 0xAE100000, len = 32k
+    ram_external_app_c16blocker            (rwx) : org = 0xAE110000, len = 32k
 }
 
 SECTIONS
@@ -585,6 +580,12 @@ SECTIONS
         */external/rtty_tx/*(*ui*external_app*rtty_tx*);
     } > ram_external_app_rtty_tx
 
+    .external_app_tpmstx : ALIGN(4) SUBALIGN(4)
+    {
+        KEEP(*(.external_app.app_tpmstx.application_information));
+        */external/tpmstx/*(*ui*external_app*tpmstx*);
+    } > ram_external_app_tpmstx
+
     .external_app_pocsag_tx : ALIGN(4) SUBALIGN(4)
     {
         KEEP(*(.external_app.app_pocsag_tx.application_information));
@@ -665,8 +666,8 @@ SECTIONS
 
     .external_app_signal_hunter : ALIGN(4) SUBALIGN(4)
     {
-      KEEP(*(.external_app.app_signal_hunter.application_information));
-      */external/signal_hunter/*(*ui*external_app*signal_hunter*);
+        KEEP(*(.external_app.app_signal_hunter.application_information));
+        */external/signal_hunter/*(*ui*external_app*signal_hunter*);
     } > ram_external_app_signal_hunter
 
     .external_app_tetra_rx : ALIGN(4) SUBALIGN(4)
@@ -699,6 +700,10 @@ SECTIONS
         *(*ui*external_app*aprs_tx*);
     } > ram_external_app_aprs_tx
 
-
+    .external_app_c16blocker : ALIGN(4) SUBALIGN(4)
+    {
+        KEEP(*(.external_app.app_c16blocker.application_information));
+        */external/c16blocker/*(*ui*external_app*c16blocker*);
+    } > ram_external_app_c16blocker
 
 }
