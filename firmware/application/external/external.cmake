@@ -3,6 +3,10 @@ set(EXTCPPSRC
 	external/afsk_rx/main.cpp
 	external/afsk_rx/ui_afsk_rx.cpp
 
+ #c16blocker
+ external/c16blocker/main.cpp
+ external/c16blocker/ui_c16blocker.cpp
+
 	#calculator  632 bytes
 	external/calculator/main.cpp
 	external/calculator/ui_calculator.cpp
@@ -504,6 +508,7 @@ set(EXTAPPLIST
 	hard_reset
 	secplustx
   signal_hunter
+ c16blocker
 	tetra_rx
 	adsbrx
 	ais_rx
